@@ -85,45 +85,34 @@ The model fills missing knowledge gaps with plausible guesses.
 ### 5. Retrieval failures
 In RAG systems, poor retrieval can cause grounded hallucinations.
 
----
+## LLM Reliability Lifecycle
 
-# Repository Structure
+```mermaid
+flowchart TD
+    A[Foundations] --> B[Detection]
+    B --> C[Mitigation]
+    C --> D[Authentication]
+    D --> E[Evaluation]
+    E --> F[Industrial Deployment]
+```
+## Repository Structure
 
-This repository is organized to mirror the **actual lifecycle of reliable LLM systems**.
+```mermaid
+flowchart TD
+    A[awesome-llm-hallucination-mitigation]
+    A --> B[01 Foundations]
+    A --> C[02 Detection Methods]
+    A --> D[03 Mitigation Strategies]
+    A --> E[04 Authentication Layer]
+    A --> F[05 Evaluation Frameworks]
+    A --> G[06 Industrial Architecture]
+    A --> H[07 Industry Use Cases]
+    A --> I[08 Open Source Tools]
+    A --> J[09 Research Papers]
+    A --> K[10 Datasets]
+    A --> L[11 Open Problems]
+```
 
-
-Foundations
-↓
-Detection
-↓
-Mitigation
-↓
-Authentication
-↓
-Evaluation
-↓
-Industrial Deployment
-
-
-
-# Directory overview:
-
-01_foundations
-02_detection_methods
-03_mitigation_strategies
-04_authentication_layer
-05_evaluation_frameworks
-06_industrial_architecture
-07_industry_use_cases
-08_open_source_tools
-09_research_papers
-10_datasets
-11_open_problems
-
-
-
-
----
 
 # Hallucination Taxonomy
 
@@ -274,24 +263,20 @@ Expert review of factual correctness.
 
 Production-grade LLM systems require **multiple verification layers**.
 
-Example architecture:
-User Query
-↓
-Query Rewriter
-↓
-Retriever
-↓
-Context Filter
-↓
-LLM Generation
-↓
-Claim Extractor
-↓
-Fact Verification Model
-↓
-Confidence Scoring
-↓
-Final Answer
+## Example Industrial LLM Pipeline
+
+```mermaid
+flowchart TD
+    A[User Query] --> B[Query Rewriter]
+    B --> C[Retriever]
+    C --> D[Context Filter]
+    D --> E[LLM Generation]
+    E --> F[Claim Extractor]
+    F --> G[Fact Verification Model]
+    G --> H[Confidence Scoring]
+    H --> I[Final Answer]
+```
+
 
 
 Additional production components:
