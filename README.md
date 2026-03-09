@@ -1,4 +1,4 @@
-[awesome-llm-hallucination-mitigation_README.md](https://github.com/user-attachments/files/25840557/awesome-llm-hallucination-mitigation_README.md)
+
 # Awesome LLM Hallucination Mitigation
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
@@ -175,53 +175,6 @@ The second statement **was never in the provided context**.
 
 ------------------------------------------------------------------------
 
-## Hallucination Frequency in Practice
-
-Research and industry benchmarks show hallucinations occur frequently
-when models lack grounding.
-
-  -----------------------------------------------------------------------
-  Study                        Finding
-  ---------------------------- ------------------------------------------
-  TruthfulQA                   GPT‑3 truthfulness around \~58%
-
-  OpenAI GPT‑4 report          GPT‑4 reduces but does not eliminate
-                               hallucinations
-
-  RAG evaluations              30--50% of RAG errors come from context
-                               misuse
-
-  Code generation studies      LLMs frequently invent APIs
-  -----------------------------------------------------------------------
-
-------------------------------------------------------------------------
-
-## Common Hallucination Types in Production
-
-  Rank   Hallucination Type       Cause
-  ------ ------------------------ -------------------------------
-  1      Factual hallucination    Missing knowledge
-  2      Context hallucination    Ignoring retrieved documents
-  3      Code hallucination       Predicting APIs statistically
-  4      Citation hallucination   Predicting citation patterns
-  5      Numeric hallucination    Arithmetic limitations
-
-------------------------------------------------------------------------
-
-## Techniques to Reduce Hallucinations
-
-  Category             Technique
-  -------------------- --------------------------------
-  Prompt engineering   Chain‑of‑Thought prompting
-  Prompt engineering   Few‑shot prompting
-  Retrieval            Retrieval‑Augmented Generation
-  Verification         LLM‑as‑judge
-  Verification         Fact checking
-  Guardrails           Output validation
-  Tool use             Calculator / code interpreter
-  Monitoring           LLM observability systems
-
-------------------------------------------------------------------------
 
 ## Open Source Tools
 
