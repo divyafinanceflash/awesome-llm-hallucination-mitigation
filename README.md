@@ -38,24 +38,6 @@ Correct answer
 
     Python was created by Guido van Rossum and released in 1991.
 
-------------------------------------------------------------------------
-
-## Why Hallucination Matters
-
-Hallucinations create real risks in production AI systems.
-
-  Domain             Risk
-  ------------------ ------------------------------
-  Healthcare         Incorrect medical advice
-  Finance            Wrong financial calculations
-  Legal              Fabricated case law
-  Customer support   False product information
-  Research           Fake academic citations
-
-Real incidents include lawyers submitting **AI-generated fake legal
-cases** and chatbots providing **incorrect company policies**.
-
-------------------------------------------------------------------------
 
 ## Hallucination Mitigation Architecture
 
@@ -79,157 +61,358 @@ H --> I
 I --> J[Monitoring]
 
 J --> K[Final Response]
+
 ```
 
-## Practical Examples of Hallucinations
+---
 
-### 1. Factual Hallucination
+# Why Hallucination Happens
 
-Prompt
+LLMs hallucinate due to fundamental limitations in how they are trained.
 
-    Where is the Eiffel Tower located?
+### 1. Next-token prediction objective
+Models generate text based on probability rather than truth verification.
 
-Hallucinated output
+### 2. Incomplete training data
+The model may not have seen certain facts or may have conflicting information.
 
-    The Eiffel Tower is located in Berlin, Germany.
+### 3. Lack of grounding
+The model often generates answers without referencing external knowledge sources.
 
-Correct answer
+### 4. Overgeneralization
+The model fills missing knowledge gaps with plausible guesses.
 
-    The Eiffel Tower is located in Paris, France.
+### 5. Retrieval failures
+In RAG systems, poor retrieval can cause grounded hallucinations.
 
-------------------------------------------------------------------------
+---
 
-### 2. Citation Hallucination
+# Repository Structure
 
-Prompt
-
-    Give research papers about hallucinations in LLMs.
-
-Hallucinated output
-
-    Smith et al., 2021. Understanding GPT hallucinations.
-    Journal of Artificial Intelligence Systems.
-
-Problem: the paper **does not exist**.
-
-Real papers
-
--   TruthfulQA (2021)
--   Chain‑of‑Verification (2023)
-
-------------------------------------------------------------------------
-
-### 3. Reasoning Hallucination
-
-Prompt
-
-    If a car travels 60 km/h for 3 hours, how far does it go?
-
-Hallucinated reasoning
-
-    distance = speed + time
-    distance = 60 + 3 = 63 km
-
-Correct reasoning
-
-    distance = speed × time
-    distance = 60 × 3 = 180 km
-
-------------------------------------------------------------------------
-
-### 4. Numeric Hallucination
-
-Prompt
-
-    What is 15% of 260?
-
-Hallucinated output
-
-    15% of 260 is 29
-
-Correct answer
-
-    39
-
-------------------------------------------------------------------------
-
-### 5. Context Hallucination (Common in RAG)
-
-Prompt with context
-
-    Context:
-    Python was created by Guido van Rossum.
-
-    Question:
-    Who created Python?
-
-Correct output
-
-    Guido van Rossum
-
-Hallucinated output
-
-    Python was created by Guido van Rossum and later expanded by Google engineers.
-
-The second statement **was never in the provided context**.
-
-------------------------------------------------------------------------
+This repository is organized to mirror the **actual lifecycle of reliable LLM systems**.
 
 
-## Open Source Tools
+Foundations
+↓
+Detection
+↓
+Mitigation
+↓
+Authentication
+↓
+Evaluation
+↓
+Industrial Deployment
 
-  ---------------------------------------------------------------------------------------------
-  Tool                    Category                Link
-  ----------------------- ----------------------- ---------------------------------------------
-  RAGAS                   RAG evaluation          https://github.com/explodinggradients/ragas
 
-  DeepEval                LLM evaluation          https://github.com/confident-ai/deepeval
 
-  Promptfoo               Prompt testing          https://github.com/promptfoo/promptfoo
+# Directory overview:
 
-  TruLens                 LLM observability       https://github.com/truera/trulens
+01_foundations
+02_detection_methods
+03_mitigation_strategies
+04_authentication_layer
+05_evaluation_frameworks
+06_industrial_architecture
+07_industry_use_cases
+08_open_source_tools
+09_research_papers
+10_datasets
+11_open_problems
 
-  Guardrails AI           Output validation       https://github.com/guardrails-ai/guardrails
 
-  LangSmith               LLM monitoring          https://smith.langchain.com
 
-  ---------------------------------------------------------------------------------------------
 
-------------------------------------------------------------------------
+---
 
-## Research Papers
+# Hallucination Taxonomy
 
-  -----------------------------------------------------------------------
-  Paper                               Link
-  ----------------------------------- -----------------------------------
-  Retrieval‑Augmented Generation      https://arxiv.org/abs/2005.11401
+Hallucinations can be categorized into several types:
 
-  Chain‑of‑Thought Prompting          https://arxiv.org/abs/2201.11903
+### Factual hallucination
+Incorrect statements about real-world facts.
 
-  Self Consistency Improves Reasoning https://arxiv.org/abs/2203.11171
+### Fabricated references
+Invented citations, sources, or research papers.
 
-  TruthfulQA Benchmark                https://arxiv.org/abs/2109.07958
+### Reasoning hallucination
+Logical reasoning errors that lead to false conclusions.
 
-  -----------------------------------------------------------------------
+### Instruction hallucination
+Generating outputs that violate prompt instructions.
 
-------------------------------------------------------------------------
+### Grounding hallucination
+Outputs that contradict provided context or retrieved documents.
 
-## Contributing
+---
+
+# Detection Methods
+
+Detecting hallucinations is an active research area.
+
+Common approaches include:
+
+### Uncertainty-based detection
+- entropy analysis
+- token probability thresholds
+- confidence scoring
+
+### Self-evaluation
+- LLM critique
+- self-consistency checking
+- reflection prompts
+
+### Embedding similarity
+- compare answer embeddings with source documents
+- detect unsupported claims
+
+### Contradiction detection
+- natural language inference models
+- fact consistency scoring
+
+### External verification
+- retrieval-based fact checking
+- knowledge base verification
+
+---
+
+# Mitigation Strategies
+
+Hallucination mitigation techniques operate at **three stages**.
+
+---
+
+## Pre-Generation
+
+Techniques applied before the model generates text.
+
+Examples:
+
+- Retrieval-Augmented Generation (RAG)
+- Knowledge graph grounding
+- Prompt engineering
+- Query rewriting
+- Controlled context injection
+
+---
+
+## During Generation
+
+Techniques applied while the model is generating responses.
+
+Examples:
+
+- Constrained decoding
+- Chain-of-verification
+- reasoning scaffolding
+- self-reflection prompts
+- step-by-step reasoning control
+
+---
+
+## Post Generation
+
+Techniques applied after an answer is generated.
+
+Examples:
+
+- claim extraction
+- fact verification
+- answer revision
+- contradiction detection
+- abstention mechanisms
+
+---
+
+# Authentication Layer
+
+Reliable AI systems require **verification and provenance tracking**.
+
+Key concepts include:
+
+### Evidence alignment
+Ensure every claim is supported by retrieved evidence.
+
+### Citation verification
+Validate that referenced sources exist and are correct.
+
+### Provenance tracking
+Track which documents contributed to each answer.
+
+### Trusted knowledge sources
+Use verified knowledge bases and curated datasets.
+
+### Source attribution
+Ensure responses reference verifiable sources.
+
+---
+
+# Evaluation Frameworks
+
+Reliable LLM systems require **objective evaluation metrics**.
+
+Common evaluation methods include:
+
+### Factuality metrics
+Measure correctness of generated statements.
+
+### Groundedness metrics
+Evaluate alignment with provided context.
+
+### Hallucination rate
+Percentage of unsupported claims.
+
+### RAG evaluation
+Measure retrieval relevance and answer grounding.
+
+### Human evaluation
+Expert review of factual correctness.
+
+---
+
+# Industrial LLM Architecture
+
+Production-grade LLM systems require **multiple verification layers**.
+
+Example architecture:
+User Query
+↓
+Query Rewriter
+↓
+Retriever
+↓
+Context Filter
+↓
+LLM Generation
+↓
+Claim Extractor
+↓
+Fact Verification Model
+↓
+Confidence Scoring
+↓
+Final Answer
+
+
+Additional production components:
+
+- LLM guardrails
+- observability systems
+- hallucination monitoring
+- feedback loops
+
+---
+
+# Industry Use Cases
+
+Hallucination mitigation is critical in:
+
+### Healthcare
+Clinical decision support systems.
+
+### Finance
+Risk analysis, research assistants, trading systems.
+
+### Legal
+Case law research and legal drafting.
+
+### Enterprise Search
+Corporate knowledge retrieval.
+
+### Customer Support
+Automated help systems.
+
+---
+
+# Open Source Tools
+
+Popular tools for hallucination detection and evaluation:
+
+- Guardrails AI
+- TruLens
+- RAGAS
+- Cleanlab
+- DeepEval
+- LangSmith
+- LlamaIndex evaluation
+
+---
+
+# Research Papers
+
+Important research areas include:
+
+- hallucination detection
+- factuality evaluation
+- RAG grounding
+- verification models
+- uncertainty estimation
+
+See the `09_research_papers` directory.
+
+---
+
+# Datasets
+
+Common datasets for hallucination research:
+
+- TruthfulQA
+- HaluEval
+- FEVER
+- Natural Questions
+- RAGBench
+
+---
+
+# Open Problems
+
+Major open challenges include:
+
+### Reliable hallucination detection
+No detector is consistently reliable across tasks.
+
+### Grounding at scale
+Large knowledge bases introduce retrieval complexity.
+
+### Multi-hop verification
+Complex answers require reasoning across multiple sources.
+
+### Domain-specific factuality
+Healthcare and finance require stricter verification.
+
+### Evaluation benchmarks
+Hallucination measurement remains inconsistent.
+
+---
+
+# Contributing
 
 Contributions are welcome.
 
-You can contribute:
+You can contribute by adding:
 
--   hallucination mitigation techniques
--   research papers
--   tools
--   datasets
--   case studies
+- research papers
+- open source tools
+- evaluation frameworks
+- industrial architectures
+- real-world failure cases
 
-Submit a pull request.
+Please follow the guidelines in `CONTRIBUTING.md`.
 
-------------------------------------------------------------------------
+---
 
-## License
+# License
 
 MIT License
+
+---
+
+# Acknowledgements
+
+Inspired by research from the LLM, NLP, and AI infrastructure communities working on improving **reliability, safety, and trustworthiness of language models**.
+
+---
+
+# Star the Repo
+
+If this repository helps your work, please consider starring it.
